@@ -17,6 +17,7 @@ const AttendeesSelect = (props: AttendeesSelectProps) => {
         onChange={(e) => onChange(e.target.value, item)}
         id={`attendees-select-${index}`}
         defaultValue="none"
+        className="assign-items-select"
       >
         <option disabled value="none">Assign an attendee</option>
         {options.map((option) => (

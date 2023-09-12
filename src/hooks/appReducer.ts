@@ -12,8 +12,13 @@ function reducer(state: any, action: Action) {
     case ActionTypes.SET_EVENT_NAME:
       return { ...state, eventName: action.eventName };
     case ActionTypes.ADD_ATTENDEE:
-      let newAttendees = [...state.attendees, action.attendee];
-      return { ...state, attendees: newAttendees };
+      return {
+        ...state,
+        attendees: [
+          ...state.attendees,
+          { ...action.attendee, total: 0, items: [] },
+        ],
+      };
     case ActionTypes.REMOVE_ATTENDEE:
       let filteredAttendees = state.attendees.filter(
         (attendee: AttendeeProps) => attendee.name !== action.attendeeName
@@ -40,43 +45,90 @@ function reducer(state: any, action: Action) {
         total,
       };
     }
+    case ActionTypes.SET_TIP:
     case ActionTypes.SET_TAX:
-    case ActionTypes.SET_TIP: {
-      const newTax = action.type === ActionTypes.SET_TAX ? action.tax : state.tax;
-      const newTip = action.type === ActionTypes.SET_TIP ? action.tip : state.tip;
-      const total = state.subtotal + newTax + newTip;
+      const newTax =
+        action.type === ActionTypes.SET_TAX ? action.tax : state.tax;
+      const newTip =
+        action.type === ActionTypes.SET_TIP ? action.tip : state.tip;
+      const newTotal = state.subtotal + newTax + newTip;
+
+      const equalShareOfTaxAndTip = (newTax + newTip) / state.attendees.length;
+
       return {
         ...state,
         tax: newTax,
         tip: newTip,
-        total,
+        total: newTotal,
+        attendees: state.attendees.map((attendee: AttendeeProps) => ({
+          ...attendee,
+          total: parseFloat(
+            (attendee.total + equalShareOfTaxAndTip).toFixed(2)
+          ),
+        })),
       };
-    }
-
     case ActionTypes.ADD_ATTENDEE_ITEM:
+      // Identify if there's a previous owner of the item.
+      const previousOwner = state.attendees.find(
+        (attendee: AttendeeProps) =>
+          attendee.items.some((item) => item.name === action.item.name) // Assuming items are unique by name
+      );
+
+      // Map through the attendees and apply the necessary transformations.
       return {
         ...state,
         attendees: state.attendees.map((attendee: AttendeeProps) => {
-          // Remove the item from any attendee who currently has it
-          const itemsWithoutTarget = attendee.items.filter(
-            (item) => item.index !== action.item.index
-          );
-
-          // If this is the attendee we want to assign the item to
+          // For the attendee you want to assign the item to:
           if (attendee.name === action.attendeeName) {
+            // Check if they already have the item, if not, add it.
+            const hasItem = attendee.items.some(
+              (item) => item.name === action.item.name
+            );
+            if (!hasItem) {
+              return {
+                ...attendee,
+                items: [...attendee.items, action.item],
+                total: parseFloat(
+                  (attendee.total + action.item.cost).toFixed(2)
+                ),
+              };
+            }
+          }
+
+          // If the attendee was the previous owner of the item, remove it from their list.
+          if (previousOwner && attendee.name === previousOwner.name) {
+            const filteredItems = attendee.items.filter(
+              (item) => item.name !== action.item.name
+            );
             return {
               ...attendee,
-              items: [...itemsWithoutTarget, action.item],
+              items: filteredItems,
+              total: parseFloat((attendee.total - action.item.cost).toFixed(2)),
             };
           }
 
-          // If not the target attendee, just return their items without the target
+          // For everyone else, no changes are needed.
+          return attendee;
+        }),
+      };
+
+    case ActionTypes.SET_FRONTER: {
+      return {
+        ...state,
+        attendees: state.attendees.map((attendee: AttendeeProps) => {
+          if (attendee.name === action.attendeeName) {
+            return {
+              ...attendee,
+              isFronter: true,
+            };
+          }
           return {
             ...attendee,
-            items: itemsWithoutTarget,
+            isFronter: false,
           };
         }),
       };
+    }
     default:
       return state;
   }
@@ -129,6 +181,10 @@ export const useAppReducer = () => {
     dispatch({ type: ActionTypes.ADD_ATTENDEE_ITEM, attendeeName, item });
   };
 
+  const setFronter = (attendeeName: string) => {
+    dispatch({ type: ActionTypes.SET_FRONTER, attendeeName });
+  };
+
   return {
     eventName: state.eventName,
     attendees: state.attendees,
@@ -143,6 +199,7 @@ export const useAppReducer = () => {
     setTip,
     setTax,
     addAttendeeItem,
+    setFronter,
     dispatch,
   };
 };

@@ -7,11 +7,14 @@ export enum ActionTypes {
   ADD_ATTENDEE_ITEM = "ADD_ATTENDEE_ITEM",
   SET_TAX = "SET_TAX",
   SET_TIP = "SET_TIP",
+  SET_FRONTER = "SET_FRONTER",
 }
 
 export interface AttendeeProps {
   name: string;
   items: ItemProps[];
+  isFronter: boolean;
+  total: number;
 }
 
 export interface ItemProps {
@@ -62,6 +65,11 @@ interface AddAttendeeItemAction {
   item: ItemProps;
 }
 
+interface SetFronter {
+  type: ActionTypes.SET_FRONTER;
+  attendeeName: string;
+}
+
 export interface State {
   eventName: string;
   attendees: AttendeeProps[];
@@ -80,4 +88,5 @@ export type Action =
   | EditItemDetailsAction
   | AddAttendeeItemAction
   | SetTaxAction
-  | SetTipAction;
+  | SetTipAction
+  | SetFronter;

@@ -20,7 +20,7 @@ export default function HomePage({ setEventName }: HomePageProps) {
       <h1 className="homepage-header">Split the Bill</h1>
       <h4 className="homepage-subtitle">This is for:</h4>
       <input onChange={(e) => setEventNameInput(e.target.value)} className="text-input--quiet" />
-      <button onClick={onSubmitClick} className="cta-button">Next</button>
+      <button onClick={onSubmitClick} className="button cta-button">Next</button>
     </div>
   );
 }

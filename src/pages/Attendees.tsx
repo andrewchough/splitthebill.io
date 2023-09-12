@@ -23,7 +23,7 @@ export default function Attendees({
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter" && inputValue.trim()) {
-      addAttendee({ name: inputValue.trim(), items: [] });
+      addAttendee({ name: inputValue.trim(), items: [], isFronter: false, total: 0 });
       setInputValue("");
     }
   };

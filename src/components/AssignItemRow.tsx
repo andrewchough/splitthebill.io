@@ -17,15 +17,30 @@ export default function AssignItemRow({
   addAttendeeItem,
 }: ItemRowProps) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-      <p>
-        Item {index} {index === 1 && <span>*</span>}
-      </p>
-      <input disabled value={item?.name}></input>
-      <p>
-        Cost of Item {index} {index === 1 && <span>*</span>}
-      </p>
-      <input disabled value={item?.cost}></input>
+    <div className="item-input-container">
+      <div className="item-input">
+        <label htmlFor={`name-${index}`}>Item {index}</label>
+        <input
+          disabled
+          value={item?.name}
+          className="item-input-textfield"
+          id={`name-${index}`}
+        />
+      </div>
+      <div className="item-input">
+        <label htmlFor={`cost-${index}`}>Cost of Item {index}</label>
+        <div>
+          <input
+            disabled
+            value={item?.cost}
+            className="item-input-textfield"
+            type="number"
+            placeholder="0.00"
+            step="0.01"
+            id={`cost-${index}`}
+          />
+        </div>
+      </div>
       <AttendeesSelect
         options={attendees}
         index={index}

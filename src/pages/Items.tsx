@@ -98,7 +98,7 @@ export default function Items({
       />
       <div className="button-container">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/attendees")}
           className="button secondary-button"
         >
           Back

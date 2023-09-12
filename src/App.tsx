@@ -7,6 +7,7 @@ import Attendees from "./pages/Attendees";
 import Fronted from "./pages/Fronted";
 import HomePage from "./pages/HomePage";
 import Items from "./pages/Items";
+import Summary from "./pages/Summary";
 
 import { useAppReducer } from "./hooks/appReducer";
 
@@ -25,8 +26,8 @@ export default function App() {
     setTip,
     setTax,
     addAttendeeItem,
+    setFronter,
   } = useAppReducer();
-
   return (
     <Routes>
       <Route path="/" element={<HomePage setEventName={setEventName} />} />
@@ -69,7 +70,20 @@ export default function App() {
       />
       <Route
         path="/fronted"
-        element={<Fronted eventName={eventName} attendees={attendees} />}
+        element={
+          <Fronted
+            eventName={eventName}
+            attendees={attendees}
+            setFronter={setFronter}
+          />
+        }
+      />
+      <Route
+        path="/summary"
+        element={
+          <Summary eventName={eventName} attendees={attendees}
+          />
+        }
       />
     </Routes>
   );
