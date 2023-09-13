@@ -78,6 +78,7 @@ export interface State {
   tip: number;
   subtotal: number;
   total: number;
+  fronter: string;
 }
 
 export type Action =

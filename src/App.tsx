@@ -18,6 +18,7 @@ export default function App() {
     items,
     subtotal,
     total,
+    fronter,
     setEventName,
     addAttendee,
     removeAttendee,
@@ -81,7 +82,7 @@ export default function App() {
       <Route
         path="/summary"
         element={
-          <Summary eventName={eventName} attendees={attendees}
+          <Summary eventName={eventName} attendees={attendees} fronter={fronter}
           />
         }
       />

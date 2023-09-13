@@ -60,13 +60,20 @@ function reducer(state: any, action: Action) {
         tax: newTax,
         tip: newTip,
         total: newTotal,
-        attendees: state.attendees.map((attendee: AttendeeProps) => ({
-          ...attendee,
-          total: parseFloat(
-            (attendee.total + equalShareOfTaxAndTip).toFixed(2)
-          ),
-        })),
+        attendees: state.attendees.map((attendee: AttendeeProps) => {
+          const attendeeSubtotal = attendee.items.reduce(
+            (sum, item) => sum + item.cost,
+            0
+          );
+          return {
+            ...attendee,
+            total: parseFloat(
+              (attendeeSubtotal + equalShareOfTaxAndTip).toFixed(2)
+            ),
+          };
+        }),
       };
+
     case ActionTypes.ADD_ATTENDEE_ITEM:
       // Identify if there's a previous owner of the item.
       const previousOwner = state.attendees.find(
@@ -115,6 +122,7 @@ function reducer(state: any, action: Action) {
     case ActionTypes.SET_FRONTER: {
       return {
         ...state,
+        fronter: action.attendeeName,
         attendees: state.attendees.map((attendee: AttendeeProps) => {
           if (attendee.name === action.attendeeName) {
             return {
@@ -143,6 +151,7 @@ export const useAppReducer = () => {
     tip: 0,
     subtotal: 0,
     total: 0,
+    fronter: "",
   };
   const [state, dispatch] = useReducer<Reducer<State, Action>>(
     reducer,
@@ -191,6 +200,7 @@ export const useAppReducer = () => {
     items: state.items,
     subtotal: state.subtotal,
     total: state.total,
+    fronter: state.fronter,
     setEventName,
     addAttendee,
     removeAttendee,
