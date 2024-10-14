@@ -1,4 +1,3 @@
-// components/HomePage.tsx
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEventName } from "../lib/eventSlice";

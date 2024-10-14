@@ -19,18 +19,17 @@ export const calculateFinalAmounts = createAsyncThunk(
     const { tip, tax } = state.items;
     const totalSharedCosts = tip + tax;
 
-    // Calculate individual totals and overall total
     const individualTotals = attendees.map((attendee) => ({
       name: attendee.name,
       total: attendee.items.reduce((sum, item) => sum + item.cost, 0),
       isFronter: attendee.isFronter,
     }));
+
     const overallTotal = individualTotals.reduce(
       (sum, ind) => sum + ind.total,
       0
     );
 
-    // Calculate proportions and distribute shared costs
     const withSharedCosts = individualTotals.map((ind) => {
       const proportion = ind.total / overallTotal;
       const sharedCostShare = totalSharedCosts * proportion;
@@ -40,13 +39,11 @@ export const calculateFinalAmounts = createAsyncThunk(
       };
     });
 
-    // Find the fronter
     const fronter = withSharedCosts.find((att) => att.isFronter);
     if (!fronter) {
       throw new Error("No fronter found");
     }
 
-    // Calculate amounts owed to fronter
     return attendees.map((attendee) => {
       const calculated = withSharedCosts.find(
         (att) => att.name === attendee.name
@@ -82,16 +79,14 @@ const attendeesSlice = createSlice({
       action: PayloadAction<{ attendeeName: string; item: ItemProps }>
     ) {
       const { attendeeName, item } = action.payload;
+
+      state.forEach((attendee) => {
+        attendee.items = attendee.items.filter((i) => i.name !== item.name);
+      });
+
       const attendee = state.find((a) => a.name === attendeeName);
       if (attendee) {
-        const existingItemIndex = attendee.items.findIndex(
-          (i) => i.name === item.name
-        );
-        if (existingItemIndex === -1) {
-          attendee.items.push(item);
-        } else {
-          attendee.items.splice(existingItemIndex, 1);
-        }
+        attendee.items.push(item);
       }
     },
     updateFronterStatus(state, action: PayloadAction<string>) {

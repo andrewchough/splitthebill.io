@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../lib/store";
-import { addAttendeeItem } from "../lib/attendeeSlice";
+import { addAttendeeItem, calculateFinalAmounts } from "../lib/attendeeSlice";
 import { inputtedEventName } from "../lib/eventSlice";
 
 import AssignItemRow from "../components/AssignItemRow";
@@ -18,6 +18,7 @@ export default function AssignItems() {
 
   const handleAddAttendeeItem = (attendeeName: string, item: ItemProps) => {
     dispatch(addAttendeeItem({ attendeeName, item }));
+    dispatch(calculateFinalAmounts());
   };
 
   return (

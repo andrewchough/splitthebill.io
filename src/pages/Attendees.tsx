@@ -6,7 +6,7 @@ import AttendeeTag from "../components/AttendeeTag";
 import { AttendeeProps } from "../utils/types";
 import { addAttendee, removeAttendee } from "../lib/attendeeSlice";
 import { inputtedEventName } from "../lib/eventSlice";
-import { RootState } from "../lib/store"; // Make sure to import RootState
+import { RootState } from "../lib/store";
 
 export default function Attendees() {
   const navigate = useNavigate();
