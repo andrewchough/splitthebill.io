@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AttendeeProps, ItemProps } from "../../utils/types";
+import { ItemProps, AttendeeProps } from "src/utils/types";
 
 interface AttendeesSelectProps {
   item: ItemProps;

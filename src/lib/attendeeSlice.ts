@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { ItemProps } from "../utils/types";
+
 import { RootState } from "./store";
 
 interface AttendeeProps {

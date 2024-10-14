@@ -1,12 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React from "react";
+import { useRouter } from "next/navigation";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addAttendeeItem, calculateFinalAmounts } from "src/lib/attendeeSlice";
 import { inputtedEventName } from "src/lib/eventSlice";
 import { AppDispatch, RootState } from "src/lib/store";
 import { ItemProps } from "src/utils/types";
+
 import AssignItemRow from "./AssignItemRow";
 
 export default function AssignItems() {

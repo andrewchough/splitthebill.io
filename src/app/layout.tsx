@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
 import { Providers } from "./Providers";
-import '../index.css'
+
+import type { Metadata } from "next";
+import "../index.css";
 
 export const metadata: Metadata = {
   title: "splitthebill.io",

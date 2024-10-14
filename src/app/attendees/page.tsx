@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/navigation";
-import { RootState } from "src/lib/store";
-import { inputtedEventName } from "src/lib/eventSlice";
+
+import { useDispatch, useSelector } from "react-redux";
+
 import { addAttendee, removeAttendee } from "src/lib/attendeeSlice";
+import { inputtedEventName } from "src/lib/eventSlice";
+import { RootState } from "src/lib/store";
 import { AttendeeProps } from "src/utils/types";
+
 import AttendeeTag from "./AttendeeTag";
 
 export default function Attendees() {

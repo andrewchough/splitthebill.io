@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+
+import { useRouter } from "next/navigation";
+
 import { useDispatch } from "react-redux";
+
 import { setEventName } from "../lib/eventSlice";
 import { AppDispatch } from "../lib/store";
-import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();

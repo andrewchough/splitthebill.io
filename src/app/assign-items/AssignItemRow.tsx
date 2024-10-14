@@ -1,5 +1,7 @@
 import React from "react";
+
 import { ItemProps, AttendeeProps } from "src/utils/types";
+
 import AttendeesSelect from "./AttendeesSelect";
 
 interface ItemRowProps {

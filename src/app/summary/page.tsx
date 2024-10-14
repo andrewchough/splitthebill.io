@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React from "react";
+import { useRouter } from "next/navigation";
+
 import { useSelector } from "react-redux";
 import { inputtedEventName } from "src/lib/eventSlice";
 import { RootState } from "src/lib/store";

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { ItemProps } from "../utils/types";
 
 interface ItemsState {

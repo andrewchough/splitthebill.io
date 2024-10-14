@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { useSelector, useDispatch } from "react-redux";
 import { inputtedEventName } from "src/lib/eventSlice";
 import {
@@ -11,8 +12,9 @@ import {
   setTip,
 } from "src/lib/itemsSlice";
 import { AppDispatch, RootState } from "src/lib/store";
-import ItemRow from "./ItemRow";
+
 import BillExtras from "./BillExtras";
+import ItemRow from "./ItemRow";
 
 export default function Items() {
   const [numberOfRows, setNumberOfRows] = useState(1);
