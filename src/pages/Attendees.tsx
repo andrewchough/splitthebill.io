@@ -16,8 +16,6 @@ export default function Attendees() {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter" && inputValue.trim()) {
-      console.log("Adding attendee");
-      console.log(inputValue.trim());
       dispatch(
         addAttendee({
           name: inputValue.trim(),

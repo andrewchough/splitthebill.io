@@ -1,38 +1,27 @@
 import React, { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
-import ItemRow from "../components/ItemRow";
-import BillExtras from "../components/BillExtras";
-
-import { ItemProps } from "../utils/types";
-
-interface ItemsProps {
-  eventName: string;
-  addItemDetails: (item: Partial<ItemProps>) => void;
-  editItemDetails: (payload: {
-    index: number;
-    data: Partial<ItemProps>;
-  }) => void;
-  setTip: (tip: number) => void;
-  setTax: (tax: number) => void;
-  subtotal: number;
-  total: number;
-  items: ItemProps[];
-}
-
-export default function Items({
-  eventName,
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../lib/store";
+import {
   addItemDetails,
   editItemDetails,
   setTip,
   setTax,
-  subtotal,
-  total,
-  items,
-}: ItemsProps) {
+} from "../lib/itemsSlice";
+import { inputtedEventName } from "../lib/eventSlice";
+
+import ItemRow from "../components/ItemRow";
+import BillExtras from "../components/BillExtras";
+
+export default function Items() {
   const [numberOfRows, setNumberOfRows] = useState(1);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const eventName = useSelector(inputtedEventName);
+  const { items, subtotal, total, tip, tax } = useSelector(
+    (state: RootState) => state.items
+  );
 
   const handleOnBlur = (
     field: "name" | "cost",
@@ -40,18 +29,16 @@ export default function Items({
     index: number
   ) => {
     if (index < items.length) {
-      // This indicates an existing item, hence we edit
       if (field === "name") {
-        editItemDetails({ index, data: { name: value as string } });
+        dispatch(editItemDetails({ index, data: { name: value as string } }));
       } else if (field === "cost") {
-        editItemDetails({ index, data: { cost: Number(value) } });
+        dispatch(editItemDetails({ index, data: { cost: Number(value) } }));
       }
     } else {
-      // This indicates a new item, hence we add
       if (field === "name") {
-        addItemDetails({ name: value as string, cost: 0 });
+        dispatch(addItemDetails({ name: value as string, cost: 0 }));
       } else if (field === "cost") {
-        addItemDetails({ name: "", cost: Number(value) });
+        dispatch(addItemDetails({ name: "", cost: Number(value) }));
       }
     }
   };
@@ -93,10 +80,12 @@ export default function Items({
         </button>
       </div>
       <BillExtras
-        setTip={setTip}
-        setTax={setTax}
+        setTip={(tipValue: number) => dispatch(setTip(tipValue))}
+        setTax={(taxValue: number) => dispatch(setTax(taxValue))}
         subtotal={subtotal}
         total={total}
+        tip={tip}
+        tax={tax}
         handleMoneyInputChange={handleMoneyInputChange}
       />
       <div className="button-container">

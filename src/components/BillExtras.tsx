@@ -5,6 +5,8 @@ interface BillExtrasProps {
   setTax: (tax: number) => void;
   subtotal: number;
   total: number;
+  tip: number;
+  tax: number;
   handleMoneyInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,6 +15,8 @@ export default function BillExtras({
   setTax,
   subtotal,
   total,
+  tip,
+  tax,
   handleMoneyInputChange,
 }: BillExtrasProps) {
   return (
@@ -31,6 +35,7 @@ export default function BillExtras({
               placeholder="0.00"
               step="0.01"
               id="tip"
+              value={tip.toFixed(2)}
             />
           </div>
         </div>
@@ -47,6 +52,7 @@ export default function BillExtras({
               placeholder="0.00"
               step="0.01"
               id="tax"
+              value={tax.toFixed(2)}
             />
           </div>
         </div>

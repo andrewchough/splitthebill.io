@@ -1,21 +1,21 @@
 import React from "react";
-
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../lib/store";
+import { setFronter } from "../lib/eventSlice"; // Assuming setFronter is in eventSlice
+import { inputtedEventName } from "../lib/eventSlice";
 
-import { AttendeeProps } from "../utils/types";
-
-interface FrontedProps {
-  eventName: string;
-  attendees: AttendeeProps[];
-  setFronter: (attendeeName: string) => void;
-}
-
-export default function Fronted({
-  eventName,
-  attendees,
-  setFronter,
-}: FrontedProps) {
+export default function Fronted() {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const eventName = useSelector(inputtedEventName);
+  const attendees = useSelector((state: RootState) => state.attendees);
+
+  const handleSetFronter = (attendeeName: string) => {
+    dispatch(setFronter(attendeeName));
+  };
+
   return (
     <div className="fronted-container">
       <p className="event-name-header">Event name: </p>
@@ -30,7 +30,7 @@ export default function Fronted({
                 ? "attendee-button--fronter"
                 : "attendee-button"
             }
-            onClick={() => setFronter(attendee.name)}
+            onClick={() => handleSetFronter(attendee.name)}
           >
             {attendee.name}
           </button>

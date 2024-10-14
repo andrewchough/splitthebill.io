@@ -10,7 +10,12 @@ function AttendeeTag({ attendee, removeAttendee }: AttendeeTagProps) {
   return (
     <div className="attendee-tag">
       {attendee.name}
-      <button onClick={() => removeAttendee(attendee.name)} className="attendee-remove-button">X</button>
+      <button
+        onClick={() => removeAttendee(attendee.name)}
+        className="attendee-remove-button cursor-pointer"
+      >
+        X
+      </button>
     </div>
   );
 }

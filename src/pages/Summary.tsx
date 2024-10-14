@@ -1,16 +1,16 @@
 import React from "react";
-
 import { useNavigate } from "react-router-dom";
-import { AttendeeProps } from "../utils/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../lib/store";
+import { inputtedEventName } from "../lib/eventSlice";
 
-interface SummaryProps {
-  eventName: string;
-  attendees: AttendeeProps[];
-  fronter: string;
-}
-
-export default function Summary({ eventName, attendees, fronter }: SummaryProps) {
+export default function Summary() {
   const navigate = useNavigate();
+
+  const eventName = useSelector(inputtedEventName);
+  const attendees = useSelector((state: RootState) => state.attendees);
+  const fronter = useSelector((state: RootState) => state.event.fronter);
+
   return (
     <div className="summary-container">
       <p className="event-name-header">Event name: </p>
@@ -23,7 +23,9 @@ export default function Summary({ eventName, attendees, fronter }: SummaryProps)
           !attendee.isFronter && (
             <div className="summary-row" key={`${attendee.name}-summary-row`}>
               <h2>{attendee.name}</h2>
-              <h2 className="summary-total">{`$${(attendee.total).toFixed(2)}`}</h2>
+              <h2 className="summary-total">{`$${attendee.total.toFixed(
+                2
+              )}`}</h2>
             </div>
           )
       )}
@@ -34,10 +36,7 @@ export default function Summary({ eventName, attendees, fronter }: SummaryProps)
         >
           Back
         </button>
-        <button
-          onClick={() => navigate("/")}
-          className="button cta-button"
-        >
+        <button onClick={() => navigate("/")} className="button cta-button">
           Split another bill
         </button>
       </div>
