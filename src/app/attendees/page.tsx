@@ -1,15 +1,17 @@
+"use client";
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-import AttendeeTag from "../components/AttendeeTag";
-import { AttendeeProps } from "../utils/types";
-import { addAttendee, removeAttendee } from "../lib/attendeeSlice";
-import { inputtedEventName } from "../lib/eventSlice";
-import { RootState } from "../lib/store";
+import { useRouter } from "next/navigation";
+import { RootState } from "src/lib/store";
+import { inputtedEventName } from "src/lib/eventSlice";
+import { addAttendee, removeAttendee } from "src/lib/attendeeSlice";
+import { AttendeeProps } from "src/utils/types";
+import AttendeeTag from "./AttendeeTag";
 
 export default function Attendees() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
   const [showAttendeesError, setShowAttendeesError] = useState(false);
@@ -28,7 +30,7 @@ export default function Attendees() {
       setShowAttendeesError(true);
     } else {
       setShowAttendeesError(false);
-      navigate("/items");
+      router.push("/items");
     }
   };
 
@@ -50,7 +52,7 @@ export default function Attendees() {
         <input
           value={inputValue}
           onChange={(e) => {
-            setShowAttendeesError(false); 
+            setShowAttendeesError(false);
             setInputValue(e.target.value);
           }}
           onKeyDown={handleKeyPress}
@@ -63,7 +65,7 @@ export default function Attendees() {
       )}
       <div className="button-container">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => router.push("/")}
           className="button secondary-button"
         >
           Back

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Provider } from "react-redux";
-import store from "src/lib/store";
+import { Providers } from "./Providers";
+import '../index.css'
 
 export const metadata: Metadata = {
   title: "splitthebill.io",
@@ -15,9 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider store={store}>
+        <Providers>
           <div id="root">{children}</div>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

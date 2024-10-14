@@ -1,16 +1,17 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../lib/store";
-import { setFronter } from "../lib/eventSlice";
 import {
   updateFronterStatus,
   calculateFinalAmounts,
-} from "../lib/attendeeSlice";
-import { inputtedEventName } from "../lib/eventSlice";
+} from "src/lib/attendeeSlice";
+import { inputtedEventName, setFronter } from "src/lib/eventSlice";
+import { AppDispatch, RootState } from "src/lib/store";
 
 export default function Fronted() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const eventName = useSelector(inputtedEventName);
@@ -24,7 +25,7 @@ export default function Fronted() {
 
   const handleNext = () => {
     dispatch(calculateFinalAmounts());
-    navigate("/summary");
+    router.push("/summary");
   };
 
   return (
@@ -49,7 +50,7 @@ export default function Fronted() {
       </div>
       <div className="button-container">
         <button
-          onClick={() => navigate("/assign-items")}
+          onClick={() => router.push("/assign-items")}
           className="button secondary-button"
         >
           Back

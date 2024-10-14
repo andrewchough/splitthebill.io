@@ -1,5 +1,5 @@
 import React from "react";
-import { AttendeeProps } from "../utils/types";
+import { AttendeeProps } from "../../utils/types";
 
 interface AttendeeTagProps {
   attendee: AttendeeProps;

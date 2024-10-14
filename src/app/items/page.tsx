@@ -1,21 +1,22 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../lib/store";
+import { inputtedEventName } from "src/lib/eventSlice";
 import {
   addItemDetails,
   editItemDetails,
-  setTip,
   setTax,
-} from "../lib/itemsSlice";
-import { inputtedEventName } from "../lib/eventSlice";
-
-import ItemRow from "../components/ItemRow";
-import BillExtras from "../components/BillExtras";
+  setTip,
+} from "src/lib/itemsSlice";
+import { AppDispatch, RootState } from "src/lib/store";
+import ItemRow from "./ItemRow";
+import BillExtras from "./BillExtras";
 
 export default function Items() {
   const [numberOfRows, setNumberOfRows] = useState(1);
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const eventName = useSelector(inputtedEventName);
@@ -89,13 +90,13 @@ export default function Items() {
       />
       <div className="button-container">
         <button
-          onClick={() => navigate("/attendees")}
+          onClick={() => router.push("/attendees")}
           className="button secondary-button"
         >
           Back
         </button>
         <button
-          onClick={() => navigate("/assign-items")}
+          onClick={() => router.push("/assign-items")}
           className="button cta-button"
         >
           Next

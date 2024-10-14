@@ -1,15 +1,16 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../lib/store";
-import { addAttendeeItem, calculateFinalAmounts } from "../lib/attendeeSlice";
-import { inputtedEventName } from "../lib/eventSlice";
+"use client";
 
-import AssignItemRow from "../components/AssignItemRow";
-import { ItemProps } from "../utils/types";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAttendeeItem, calculateFinalAmounts } from "src/lib/attendeeSlice";
+import { inputtedEventName } from "src/lib/eventSlice";
+import { AppDispatch, RootState } from "src/lib/store";
+import { ItemProps } from "src/utils/types";
+import AssignItemRow from "./AssignItemRow";
 
 export default function AssignItems() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const eventName = useSelector(inputtedEventName);
@@ -37,13 +38,13 @@ export default function AssignItems() {
       ))}
       <div className="button-container">
         <button
-          onClick={() => navigate("/items")}
+          onClick={() => router.push("/items")}
           className="button secondary-button"
         >
           Back
         </button>
         <button
-          onClick={() => navigate("/fronted")}
+          onClick={() => router.push("/fronted")}
           className="button cta-button"
         >
           Next

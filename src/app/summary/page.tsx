@@ -1,11 +1,13 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../lib/store";
-import { inputtedEventName } from "../lib/eventSlice";
+import { inputtedEventName } from "src/lib/eventSlice";
+import { RootState } from "src/lib/store";
 
 export default function Summary() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const eventName = useSelector(inputtedEventName);
   const attendees = useSelector((state: RootState) => state.attendees);
@@ -31,12 +33,12 @@ export default function Summary() {
       )}
       <div className="button-container">
         <button
-          onClick={() => navigate("/assign-items")}
+          onClick={() => router.push("/assign-items")}
           className="button secondary-button"
         >
           Back
         </button>
-        <button onClick={() => navigate("/")} className="button cta-button">
+        <button onClick={() => router.push("/")} className="button cta-button">
           Split another bill
         </button>
       </div>
