@@ -1,29 +1,31 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import AttendeeTag from "../components/AttendeeTag";
 import { AttendeeProps } from "../utils/types";
+import { addAttendee, removeAttendee } from "../lib/attendeeSlice";
+import { inputtedEventName } from "../lib/eventSlice";
 
-interface AttendeesProps {
-  eventName: string;
-  attendees: AttendeeProps[];
-  addAttendee: (attendeeName: AttendeeProps) => void;
-  removeAttendee: (attendeeName: string) => void;
-}
-
-export default function Attendees({
-  eventName,
-  attendees,
-  addAttendee,
-  removeAttendee,
-}: AttendeesProps) {
+export default function Attendees() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
+  const eventName = useSelector(inputtedEventName);
+  const attendees = useSelector((state: any) => state.attendees);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter" && inputValue.trim()) {
-      addAttendee({ name: inputValue.trim(), items: [], isFronter: false, total: 0 });
+      console.log("Adding attendee");
+      console.log(inputValue.trim());
+      dispatch(
+        addAttendee({
+          name: inputValue.trim(),
+          items: [],
+          isFronter: false,
+          total: 0,
+        })
+      );
       setInputValue("");
     }
   };
@@ -35,11 +37,11 @@ export default function Attendees({
       <h4>
         Attendees:
         <div className="tags-container">
-          {attendees.map((attendee, index) => (
+          {attendees?.map((attendee: AttendeeProps, index: number) => (
             <AttendeeTag
               attendee={attendee}
-              removeAttendee={removeAttendee}
-              key={`${attendee}-${index}`}
+              removeAttendee={(name: string) => dispatch(removeAttendee(name))}
+              key={`${attendee.name}-${index}`}
             />
           ))}
         </div>
@@ -52,8 +54,18 @@ export default function Attendees({
         />
       </h4>
       <div className="button-container">
-        <button onClick={() => navigate("/")} className="button secondary-button">Back</button>
-        <button onClick={() => navigate("/items")} className="button cta-button">Next</button>
+        <button
+          onClick={() => navigate("/")}
+          className="button secondary-button"
+        >
+          Back
+        </button>
+        <button
+          onClick={() => navigate("/items")}
+          className="button cta-button"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

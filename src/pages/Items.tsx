@@ -10,7 +10,10 @@ import { ItemProps } from "../utils/types";
 interface ItemsProps {
   eventName: string;
   addItemDetails: (item: Partial<ItemProps>) => void;
-  editItemDetails: (index: number, data: Partial<ItemProps>) => void;
+  editItemDetails: (payload: {
+    index: number;
+    data: Partial<ItemProps>;
+  }) => void;
   setTip: (tip: number) => void;
   setTax: (tax: number) => void;
   subtotal: number;
@@ -39,9 +42,9 @@ export default function Items({
     if (index < items.length) {
       // This indicates an existing item, hence we edit
       if (field === "name") {
-        editItemDetails(index, { name: value as string });
+        editItemDetails({ index, data: { name: value as string } });
       } else if (field === "cost") {
-        editItemDetails(index, { cost: Number(value) });
+        editItemDetails({ index, data: { cost: Number(value) } });
       }
     } else {
       // This indicates a new item, hence we add

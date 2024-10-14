@@ -1,6 +1,6 @@
-import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import AssignItems from "./pages/AssignItems";
 import Attendees from "./pages/Attendees";
@@ -8,41 +8,31 @@ import Fronted from "./pages/Fronted";
 import HomePage from "./pages/HomePage";
 import Items from "./pages/Items";
 import Summary from "./pages/Summary";
+import { RootState, AppDispatch } from "./lib/store";
 
-import { useAppReducer } from "./hooks/appReducer";
+import {
+  setEventName,
+  addAttendee,
+  removeAttendee,
+  addItemDetails,
+  editItemDetails,
+  setTip,
+  setTax,
+  addAttendeeItem,
+  setFronter,
+} from "./lib/appReducer";
 
 export default function App() {
-  const {
-    eventName,
-    attendees,
-    items,
-    subtotal,
-    total,
-    fronter,
-    setEventName,
-    addAttendee,
-    removeAttendee,
-    addItemDetails,
-    editItemDetails,
-    setTip,
-    setTax,
-    addAttendeeItem,
-    setFronter,
-  } = useAppReducer();
+  const dispatch = useDispatch<AppDispatch>();
+  // const { eventName, attendees, items, subtotal, total, fronter } = useSelector(
+  //   (state: RootState) => state.app
+  // );
+
   return (
     <Routes>
-      <Route path="/" element={<HomePage setEventName={setEventName} />} />
-      <Route
-        path="/attendees"
-        element={
-          <Attendees
-            eventName={eventName}
-            attendees={attendees}
-            addAttendee={addAttendee}
-            removeAttendee={removeAttendee}
-          />
-        }
-      />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/attendees" element={<Attendees />} />
+      {/* 
       <Route
         path="/items"
         element={
@@ -82,10 +72,13 @@ export default function App() {
       <Route
         path="/summary"
         element={
-          <Summary eventName={eventName} attendees={attendees} fronter={fronter}
+          <Summary
+            eventName={eventName}
+            attendees={attendees}
+            fronter={fronter}
           />
         }
-      />
+      /> */}
     </Routes>
   );
 }
