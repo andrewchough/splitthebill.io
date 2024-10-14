@@ -1,11 +1,13 @@
+"use client";
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEventName } from "../lib/eventSlice";
 import { AppDispatch } from "../lib/store";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [eventNameInput, setEventNameInput] = useState("");
   const [showEventNameError, setShowEventNameError] = useState(false);
@@ -16,7 +18,7 @@ export default function HomePage() {
       return;
     } else {
       dispatch(setEventName(eventNameInput));
-      navigate("/attendees");
+      router.push("/attendees");
     }
   };
 

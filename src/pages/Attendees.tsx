@@ -12,6 +12,7 @@ export default function Attendees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
+  const [showAttendeesError, setShowAttendeesError] = useState(false);
   const eventName = useSelector(inputtedEventName);
   const attendees = useSelector((state: RootState) => state.attendees);
 
@@ -19,6 +20,15 @@ export default function Attendees() {
     if (event.key === "Enter" && inputValue.trim()) {
       dispatch(addAttendee(inputValue.trim()));
       setInputValue("");
+    }
+  };
+
+  const handleNextButtonClick = () => {
+    if (attendees.length <= 0) {
+      setShowAttendeesError(true);
+    } else {
+      setShowAttendeesError(false);
+      navigate("/items");
     }
   };
 
@@ -39,12 +49,18 @@ export default function Attendees() {
         </div>
         <input
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            setShowAttendeesError(false); 
+            setInputValue(e.target.value);
+          }}
           onKeyDown={handleKeyPress}
           placeholder="Enter attendee name..."
           className="text-input--quiet attendees-input"
         />
       </h4>
+      {showAttendeesError && (
+        <p className="m-0 error-text bold">At least one attendee is required</p>
+      )}
       <div className="button-container">
         <button
           onClick={() => navigate("/")}
@@ -52,10 +68,7 @@ export default function Attendees() {
         >
           Back
         </button>
-        <button
-          onClick={() => navigate("/items")}
-          className="button cta-button"
-        >
+        <button onClick={handleNextButtonClick} className="button cta-button">
           Next
         </button>
       </div>
