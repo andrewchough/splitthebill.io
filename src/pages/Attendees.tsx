@@ -6,24 +6,18 @@ import AttendeeTag from "../components/AttendeeTag";
 import { AttendeeProps } from "../utils/types";
 import { addAttendee, removeAttendee } from "../lib/attendeeSlice";
 import { inputtedEventName } from "../lib/eventSlice";
+import { RootState } from "../lib/store"; // Make sure to import RootState
 
 export default function Attendees() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
   const eventName = useSelector(inputtedEventName);
-  const attendees = useSelector((state: any) => state.attendees);
+  const attendees = useSelector((state: RootState) => state.attendees);
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === "Enter" && inputValue.trim()) {
-      dispatch(
-        addAttendee({
-          name: inputValue.trim(),
-          items: [],
-          isFronter: false,
-          total: 0,
-        })
-      );
+      dispatch(addAttendee(inputValue.trim()));
       setInputValue("");
     }
   };

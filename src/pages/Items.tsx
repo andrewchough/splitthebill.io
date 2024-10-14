@@ -86,7 +86,6 @@ export default function Items() {
         total={total}
         tip={tip}
         tax={tax}
-        handleMoneyInputChange={handleMoneyInputChange}
       />
       <div className="button-container">
         <button

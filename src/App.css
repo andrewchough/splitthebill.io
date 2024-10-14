@@ -211,6 +211,7 @@ body {
 /* Fronted Page */
 .attendee-button,
 .attendee-button--fronter {
+  cursor: pointer;
   padding: 16px 20px;
   border: 1px solid #e6e6e6;
   border-radius: 10px;

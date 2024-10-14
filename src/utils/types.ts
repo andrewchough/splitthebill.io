@@ -13,8 +13,8 @@ export enum ActionTypes {
 export interface AttendeeProps {
   name: string;
   items: ItemProps[];
+  finalTotal: number;
   isFronter: boolean;
-  total: number;
 }
 
 export interface ItemProps {

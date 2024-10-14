@@ -7,7 +7,6 @@ interface BillExtrasProps {
   total: number;
   tip: number;
   tax: number;
-  handleMoneyInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function BillExtras({
@@ -17,8 +16,29 @@ export default function BillExtras({
   total,
   tip,
   tax,
-  handleMoneyInputChange,
 }: BillExtrasProps) {
+  const handleTipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.includes(".")) {
+      const [, decimal] = value.split(".");
+      if (decimal && decimal.length > 2) {
+        value = parseFloat(value).toFixed(2);
+      }
+    }
+    setTip(Number(value));
+  };
+
+  const handleTaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.includes(".")) {
+      const [, decimal] = value.split(".");
+      if (decimal && decimal.length > 2) {
+        value = parseFloat(value).toFixed(2);
+      }
+    }
+    setTax(Number(value));
+  };
+
   return (
     <>
       <div className="item-input-container">
@@ -28,14 +48,13 @@ export default function BillExtras({
           </label>
           <div className="tip-input">
             <input
-              onBlur={(e) => setTip(Number(e.target.value))}
-              onChange={handleMoneyInputChange}
+              onChange={handleTipChange}
               className="item-input-textfield"
               type="number"
               placeholder="0.00"
               step="0.01"
               id="tip"
-              value={tip.toFixed(2)}
+              value={tip || ""}
             />
           </div>
         </div>
@@ -45,14 +64,13 @@ export default function BillExtras({
           </label>
           <div className="tax-input">
             <input
-              onBlur={(e) => setTax(Number(e.target.value))}
-              onChange={handleMoneyInputChange}
+              onChange={handleTaxChange}
               className="item-input-textfield"
               type="number"
               placeholder="0.00"
               step="0.01"
               id="tax"
-              value={tax.toFixed(2)}
+              value={tax || ""}
             />
           </div>
         </div>

@@ -2,7 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../lib/store";
-import { setFronter } from "../lib/eventSlice"; // Assuming setFronter is in eventSlice
+import { setFronter } from "../lib/eventSlice";
+import {
+  updateFronterStatus,
+  calculateFinalAmounts,
+} from "../lib/attendeeSlice";
 import { inputtedEventName } from "../lib/eventSlice";
 
 export default function Fronted() {
@@ -11,9 +15,16 @@ export default function Fronted() {
 
   const eventName = useSelector(inputtedEventName);
   const attendees = useSelector((state: RootState) => state.attendees);
+  const fronter = useSelector((state: RootState) => state.event.fronter);
 
   const handleSetFronter = (attendeeName: string) => {
     dispatch(setFronter(attendeeName));
+    dispatch(updateFronterStatus(attendeeName));
+  };
+
+  const handleNext = () => {
+    dispatch(calculateFinalAmounts());
+    navigate("/summary");
   };
 
   return (
@@ -26,7 +37,7 @@ export default function Fronted() {
           <button
             key={attendee.name}
             className={
-              attendee.isFronter
+              attendee.name === fronter
                 ? "attendee-button--fronter"
                 : "attendee-button"
             }
@@ -43,10 +54,7 @@ export default function Fronted() {
         >
           Back
         </button>
-        <button
-          onClick={() => navigate("/summary")}
-          className="button cta-button"
-        >
+        <button onClick={handleNext} className="button cta-button">
           Next
         </button>
       </div>
