@@ -11,17 +11,12 @@ export default function ItemRow({
   handleOnBlur,
   handleMoneyInputChange,
 }: ItemRowProps) {
-
   return (
     <div className="item-input-container">
       <div className="item-input name-input">
         <label htmlFor={`name-${index}`}>
           Item {index + 1}{" "}
-          {index === 0 && (
-            <span className="required-field-label">
-              *
-            </span>
-          )}
+          {index === 0 && <span className="required-field-label">*</span>}
         </label>
         <input
           onBlur={(e) => handleOnBlur("name", e.target.value, index)}
@@ -32,11 +27,7 @@ export default function ItemRow({
       <div className="item-input cost-input-wrapper">
         <label htmlFor={`cost-${index}`}>
           Cost of Item {index + 1}{" "}
-          {index === 0 && (
-            <span className="required-field-label">
-              *
-            </span>
-          )}
+          {index === 0 && <span className="required-field-label">*</span>}
         </label>
         <div className="cost-input">
           <input

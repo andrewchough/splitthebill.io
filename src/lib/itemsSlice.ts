@@ -32,7 +32,7 @@ const itemsSlice = createSlice({
     },
     editItemDetails(
       state,
-      action: PayloadAction<{ index: number; data: Partial<ItemProps> }>
+      action: PayloadAction<{ index: number; data: Partial<ItemProps> }>,
     ) {
       const { index, data } = action.payload;
       state.items[index] = { ...state.items[index], ...data };

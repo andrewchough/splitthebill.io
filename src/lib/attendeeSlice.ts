@@ -27,7 +27,7 @@ export const calculateFinalAmounts = createAsyncThunk(
 
     const overallTotal = individualTotals.reduce(
       (sum, ind) => sum + ind.total,
-      0
+      0,
     );
 
     const withSharedCosts = individualTotals.map((ind) => {
@@ -46,7 +46,7 @@ export const calculateFinalAmounts = createAsyncThunk(
 
     return attendees.map((attendee) => {
       const calculated = withSharedCosts.find(
-        (att) => att.name === attendee.name
+        (att) => att.name === attendee.name,
       );
       if (!calculated) {
         throw new Error(`Calculation not found for ${attendee.name}`);
@@ -56,7 +56,7 @@ export const calculateFinalAmounts = createAsyncThunk(
         finalTotal: attendee.isFronter ? 0 : calculated.finalTotal,
       };
     });
-  }
+  },
 );
 
 const attendeesSlice = createSlice({
@@ -76,7 +76,7 @@ const attendeesSlice = createSlice({
     },
     addAttendeeItem(
       state,
-      action: PayloadAction<{ attendeeName: string; item: ItemProps }>
+      action: PayloadAction<{ attendeeName: string; item: ItemProps }>,
     ) {
       const { attendeeName, item } = action.payload;
 

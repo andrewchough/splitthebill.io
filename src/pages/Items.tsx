@@ -20,13 +20,13 @@ export default function Items() {
 
   const eventName = useSelector(inputtedEventName);
   const { items, subtotal, total, tip, tax } = useSelector(
-    (state: RootState) => state.items
+    (state: RootState) => state.items,
   );
 
   const handleOnBlur = (
     field: "name" | "cost",
     value: string | number,
-    index: number
+    index: number,
   ) => {
     if (index < items.length) {
       if (field === "name") {

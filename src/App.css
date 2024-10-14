@@ -4,6 +4,16 @@ body {
     "Segoe UI Symbol";
 }
 
+/* Helpers */
+
+.error-text {
+  color: #ef4444;
+}
+
+.bold {
+  font-weight: 700;
+}
+
 .event-name-header {
   margin: 0;
 }

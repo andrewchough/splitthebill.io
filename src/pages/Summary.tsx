@@ -24,10 +24,10 @@ export default function Summary() {
             <div className="summary-row" key={`${attendee.name}-summary-row`}>
               <h2>{attendee.name}</h2>
               <h2 className="summary-total">{`$${attendee.finalTotal.toFixed(
-                2
+                2,
               )}`}</h2>
             </div>
-          )
+          ),
       )}
       <div className="button-container">
         <button

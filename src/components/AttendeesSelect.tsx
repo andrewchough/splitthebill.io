@@ -19,7 +19,9 @@ const AttendeesSelect = (props: AttendeesSelectProps) => {
         defaultValue="none"
         className="assign-items-select"
       >
-        <option disabled value="none">Assign an attendee</option>
+        <option disabled value="none">
+          Assign an attendee
+        </option>
         {options.map((option) => (
           <option key={option.name}>{option.name}</option>
         ))}

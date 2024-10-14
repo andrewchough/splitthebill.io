@@ -8,6 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [eventNameInput, setEventNameInput] = useState("");
+  const [showEventNameError, setShowEventNameError] = useState(false);
 
   const onSubmitClick = () => {
     dispatch(setEventName(eventNameInput));
@@ -23,6 +24,7 @@ export default function HomePage() {
         onChange={(e) => setEventNameInput(e.target.value)}
         className="text-input--quiet"
       />
+      <p className="error-text bold">Event name is required</p>
       <button onClick={onSubmitClick} className="button cta-button">
         Next
       </button>
