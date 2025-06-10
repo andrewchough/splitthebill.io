@@ -1,7 +1,7 @@
 import { Providers } from "./Providers";
 
 import type { Metadata } from "next";
-import "../index.css";
+import "../output.css";
 
 export const metadata: Metadata = {
   title: "splitthebill.io",
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <div id="root">{children}</div>
+          <div id="root min-w-[800px]">{children}</div>
         </Providers>
       </body>
     </html>

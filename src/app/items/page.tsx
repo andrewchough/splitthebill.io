@@ -77,7 +77,7 @@ export default function Items() {
       <div style={{ textAlign: "center" }}>
         <button
           onClick={() => setNumberOfRows(numberOfRows + 1)}
-          className="button primary-button"
+          className="button primary-button text-red-500"
         >
           Add another item
         </button>
